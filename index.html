@@ -2,1583 +2,314 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-    <title>Bizim Küçük Hikayemiz 💖</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bizim Küçük Hikayemiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg1: #ffeef2;
-            --bg2: #ffd6e0;
+            --bg-color: #ffeef2;
             --primary: #ff4b72;
-            --primary-dark: #e83d63;
-            --text: #5a3e49;
-            --muted: #7a5c68;
+            --text-color: #5a3e49;
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html,
-        body {
-            width: 100%;
-            min-height: 100%;
-        }
-
-        body {
-            font-family: "Poppins", sans-serif;
-            color: var(--text);
-
-            background:
-                radial-gradient(circle at 20% 20%, rgba(255,255,255,.7), transparent 25%),
-                radial-gradient(circle at 80% 80%, rgba(255,255,255,.5), transparent 25%),
-                linear-gradient(135deg, var(--bg1), var(--bg2));
-
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        button {
-            font-family: inherit;
-        }
-
-        /* --------------------------------
-           ARKA PLAN KALPLER
-        -------------------------------- */
-
-        .hearts-bg {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .heart-float {
-            position: absolute;
-            bottom: -40px;
-            font-size: 20px;
-            opacity: .65;
-            animation: floatUp linear forwards;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(.8) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: .7;
-            }
-
-            100% {
-                transform: translateY(-115vh) scale(1.2) rotate(25deg);
-                opacity: 0;
-            }
-        }
-
-        /* --------------------------------
-           SAYFALAR
-        -------------------------------- */
-
-        .page {
-            display: none;
-
-            width: 100%;
-            max-width: 430px;
-            min-height: 100vh;
-
-            margin: 0 auto;
-            padding: 30px 20px;
-
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-
-            text-align: center;
-
-            position: relative;
-            z-index: 10;
-
-            animation: pageIn .4s ease;
-        }
-
-        .page.active {
-            display: flex;
-        }
-
-        @keyframes pageIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1,
-        h2 {
-            font-family: "Caveat", cursive;
-            color: var(--primary);
-            font-size: 2.4rem;
-            line-height: 1.1;
-            margin-bottom: 10px;
-        }
-
-        p {
-            font-size: .95rem;
-            line-height: 1.6;
-            color: var(--muted);
-        }
-
-        /* --------------------------------
-           BUTON
-        -------------------------------- */
-
-        .btn {
-            border: none;
-            outline: none;
-
-            background: var(--primary);
-            color: white;
-
-            padding: 13px 25px;
-            margin-top: 20px;
-
-            border-radius: 30px;
-
-            font-size: .9rem;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            box-shadow: 0 6px 18px rgba(255,75,114,.28);
-
-            transition:
-                transform .15s ease,
-                background .15s ease,
-                box-shadow .15s ease;
-        }
-
-        .btn:hover {
-            background: var(--primary-dark);
-            box-shadow: 0 8px 22px rgba(255,75,114,.35);
-        }
-
-        .btn:active {
-            transform: scale(.94);
-        }
-
-        /* --------------------------------
-           PIN
-        -------------------------------- */
-
-        .pin-heart {
-            font-size: 3rem;
-            margin-bottom: 8px;
-            animation: heartbeat 1.4s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-        }
-
-        .pin-dots {
-            display: flex;
-            gap: 11px;
-            margin: 25px 0 30px;
-        }
-
-        .dot {
-            width: 15px;
-            height: 15px;
-
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-
-            background: transparent;
-
-            transition: all .15s ease;
-        }
-
-        .dot.filled {
-            background: var(--primary);
-            transform: scale(1.12);
-        }
-
-        .keypad {
-            display: grid;
-
-            grid-template-columns: repeat(3, 1fr);
-
-            gap: 13px;
-
-            width: 100%;
-            max-width: 290px;
-        }
-
-        .key {
-            width: 100%;
-            height: 58px;
-
-            border: none;
-            border-radius: 17px;
-
-            background: rgba(255,255,255,.95);
-
-            color: var(--primary);
-
-            font-size: 1.25rem;
-            font-weight: 600;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            cursor: pointer;
-
-            box-shadow: 0 4px 12px rgba(0,0,0,.06);
-
-            transition:
-                transform .1s ease,
-                background .1s ease;
-        }
-
-        .key:active {
-            transform: scale(.9);
-            background: #ffe3ec;
-        }
-
-        /* --------------------------------
-           PROFİL
-        -------------------------------- */
-
-        .profile-img {
-            width: 145px;
-            height: 145px;
-
-            object-fit: cover;
-
-            border-radius: 50%;
-
-            border: 5px solid white;
-
-            box-shadow:
-                0 8px 25px rgba(0,0,0,.12);
-
-            margin-bottom: 20px;
-        }
-
-        /* --------------------------------
-           PUZZLE
-        -------------------------------- */
-
-        .puzzle-grid {
-            display: grid;
-
-            grid-template-columns: repeat(4, 1fr);
-
-            width: min(320px, 90vw);
-            height: min(320px, 90vw);
-
-            gap: 3px;
-
-            background: white;
-
-            padding: 5px;
-
-            border-radius: 15px;
-
-            box-shadow: 0 7px 25px rgba(0,0,0,.1);
-
-            margin: 18px 0;
-        }
-
-        .tile {
-            width: 100%;
-            height: 100%;
-
-            background-repeat: no-repeat;
-
-            border-radius: 4px;
-
-            cursor: pointer;
-
-            transition: transform .15s ease;
-        }
-
-        .tile:active {
-            transform: scale(.95);
-        }
-
-        .tile.selected {
-            outline: 3px solid var(--primary);
-            outline-offset: -3px;
-            transform: scale(.96);
-        }
-
-        .skip-btn {
-            background: transparent;
-            color: var(--primary);
-            box-shadow: none;
-            margin-top: 5px;
-        }
-
-        /* --------------------------------
-           MEKTUP
-        -------------------------------- */
-
-        .letter-card {
-            width: 100%;
-
-            background: rgba(255,255,255,.96);
-
-            padding: 25px;
-
-            border-radius: 22px;
-
-            text-align: left;
-
-            box-shadow: 0 7px 25px rgba(0,0,0,.06);
-
-            border: 1px solid #ffe3ec;
-
-            max-height: 420px;
-
-            overflow-y: auto;
-        }
-
-        .letter-card p {
-            color: #705361;
-        }
-
-        /* --------------------------------
-           ALBÜM
-        -------------------------------- */
-
-        .album-card {
-            width: 100%;
-
-            background: rgba(255,255,255,.97);
-
-            padding: 15px;
-
-            border-radius: 22px;
-
-            box-shadow: 0 7px 25px rgba(0,0,0,.07);
-        }
-
-        .album-img {
-            display: block;
-
-            width: 100%;
-            height: 220px;
-
-            object-fit: cover;
-
-            border-radius: 15px;
-
-            background: #ffe3ec;
-        }
-
-        .album-title {
-            margin-top: 12px;
-
-            font-weight: 600;
-
-            color: var(--text);
-        }
-
-        .album-controls {
-            display: flex;
-
-            align-items: center;
-            justify-content: space-between;
-
-            margin-top: 12px;
-        }
-
-        .album-arrow {
-            width: 48px;
-            height: 42px;
-
-            margin: 0;
-
-            padding: 0;
-
-            border-radius: 15px;
-        }
-
-        /* --------------------------------
-           MÜZİK
-        -------------------------------- */
-
-        .player-card {
-            width: 100%;
-
-            background: rgba(255,255,255,.97);
-
-            padding: 28px 22px;
-
-            border-radius: 27px;
-
-            box-shadow: 0 8px 28px rgba(0,0,0,.08);
-        }
-
-        .disc {
-            width: 140px;
-            height: 140px;
-
-            display: block;
-
-            object-fit: cover;
-
-            margin: 0 auto 18px;
-
-            border-radius: 50%;
-
-            border: 5px solid white;
-
-            box-shadow: 0 5px 18px rgba(0,0,0,.15);
-
-            animation: rotateDisc 9s linear infinite;
-
-            animation-play-state: paused;
-        }
-
-        .disc.playing {
-            animation-play-state: running;
-        }
-
-        @keyframes rotateDisc {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .music-label {
-            font-size: .7rem;
-            color: #aaa;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-        }
-
-        /* --------------------------------
-           SAYAÇ
-        -------------------------------- */
-
-        .counter-icon {
-            font-size: 3rem;
-            margin-bottom: 5px;
-        }
-
-        .counter-grid {
-            display: grid;
-
-            grid-template-columns: repeat(2, 1fr);
-
-            gap: 12px;
-
-            width: 100%;
-
-            margin: 22px 0;
-        }
-
-        .counter-box {
-            background: rgba(255,255,255,.97);
-
-            padding: 17px 10px;
-
-            border-radius: 19px;
-
-            box-shadow: 0 5px 16px rgba(0,0,0,.05);
-        }
-
-        .counter-box span {
-            display: block;
-
-            color: var(--primary);
-
-            font-size: 1.9rem;
-
-            font-weight: 600;
-        }
-
-        .counter-box label {
-            color: #999;
-
-            font-size: .7rem;
-
-            letter-spacing: 1.5px;
-        }
-
-        .restart {
-            margin-top: 15px;
-        }
-
-        /* --------------------------------
-           MOBİL
-        -------------------------------- */
-
-        @media (max-width: 380px) {
-
-            .page {
-                padding: 25px 15px;
-            }
-
-            h2 {
-                font-size: 2.15rem;
-            }
-
-            .keypad {
-                max-width: 270px;
-                gap: 10px;
-            }
-
-            .key {
-                height: 54px;
-            }
-
-            .album-img {
-                height: 190px;
-            }
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+        body { background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%); color: var(--text-color); min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; position: relative; }
+        
+        .hearts-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+        .heart-float { position: absolute; font-size: 1.2rem; animation: floatUp 4s infinite linear; opacity: 0.6; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.8); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
+
+        .page { display: none; width: 100%; max-width: 420px; min-height: 100vh; padding: 25px 20px; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.4s ease; position: relative; z-index: 10; }
+        .page.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1, h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
+        p { font-size: 0.95rem; line-height: 1.5; color: #7a5c68; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3); transition: 0.2s; z-index: 20; }
+        .btn:active { transform: scale(0.95); }
+
+        /* PIN EKRANI */
+        .pin-dots { display: flex; gap: 10px; margin: 20px 0 30px; }
+        .dot { width: 14px; height: 14px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.2s; background: transparent; }
+        .dot.filled { background: var(--primary); }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 280px; z-index: 30; }
+        .key { background: white; border-radius: 15px; height: 55px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.3rem; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .key:active { background: #ffe3ec; transform: scale(0.92); }
+
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; object-fit: cover; box-shadow: 0 6px 20px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .puzzle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; width: 300px; height: 300px; background: white; padding: 5px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 15px 0; }
+        .tile { width: 100%; height: 100%; background-size: 300px 300px; cursor: pointer; border-radius: 4px; }
+        .tile.selected { border: 2px solid var(--primary); }
+
+        .letter-card { background: white; padding: 25px; border-radius: 20px; text-align: left; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-height: 400px; overflow-y: auto; border: 1px solid #ffe3ec; }
+        .album-card { background: white; padding: 15px; border-radius: 20px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .album-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover; }
+        .album-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+        .player-card { background: white; padding: 25px; border-radius: 25px; width: 100%; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; }
+        .disc { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: rotate 10s linear infinite paused; }
+        .disc.playing { animation-play-state: running; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        .counter-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; margin: 20px 0; }
+        .counter-box { background: white; padding: 15px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .counter-box span { display: block; font-size: 1.8rem; font-weight: 600; color: var(--primary); }
+        .counter-box label { font-size: 0.75rem; color: #999; letter-spacing: 1px; }
     </style>
 </head>
-
 <body>
 
-    <!-- ARKA PLAN -->
     <div class="hearts-bg" id="hearts"></div>
 
-
-    <!-- =====================================
-         PIN SAYFASI
-    ====================================== -->
-
-    <section class="page active" id="page-pin">
-
-        <div class="pin-heart">💖</div>
-
+    <div class="page active" id="page-pin">
+        <div style="font-size: 2.5rem; margin-bottom: 10px;">💖</div>
         <h2>Senin İçin</h2>
-
-        <p>
-            Bu kalbin anahtarı sende...
-            <br>
-            PIN'i gir de açılsın 💕
-        </p>
-
-        <div class="pin-dots" id="pin-dots">
-
+        <p>Bu kalbin anahtarı sende — PIN'i gir de açılsın</p>
+        
+        <div class="pin-dots">
             <div class="dot" id="dot-0"></div>
             <div class="dot" id="dot-1"></div>
             <div class="dot" id="dot-2"></div>
             <div class="dot" id="dot-3"></div>
             <div class="dot" id="dot-4"></div>
             <div class="dot" id="dot-5"></div>
-
         </div>
 
         <div class="keypad">
-
-            <button class="key" data-num="1">1</button>
-            <button class="key" data-num="2">2</button>
-            <button class="key" data-num="3">3</button>
-
-            <button class="key" data-num="4">4</button>
-            <button class="key" data-num="5">5</button>
-            <button class="key" data-num="6">6</button>
-
-            <button class="key" data-num="7">7</button>
-            <button class="key" data-num="8">8</button>
-            <button class="key" data-num="9">9</button>
-
-            <button class="key" id="clear-pin">❌</button>
-            <button class="key" data-num="0">0</button>
-            <button class="key" id="backspace">⌫</button>
-
+            <div class="key" onclick="pressKey('1')">1</div>
+            <div class="key" onclick="pressKey('2')">2</div>
+            <div class="key" onclick="pressKey('3')">3</div>
+            <div class="key" onclick="pressKey('4')">4</div>
+            <div class="key" onclick="pressKey('5')">5</div>
+            <div class="key" onclick="pressKey('6')">6</div>
+            <div class="key" onclick="pressKey('7')">7</div>
+            <div class="key" onclick="pressKey('8')">8</div>
+            <div class="key" onclick="pressKey('9')">9</div>
+            <div class="key" onclick="clearPin()">❌</div>
+            <div class="key" onclick="pressKey('0')">0</div>
+            <div class="key" onclick="clearPin()">🔒</div>
         </div>
+    </div>
 
-    </section>
+    <div class="page" id="page-welcome">
+        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="profile-img">
+        <p style="font-size: 0.85rem; color: var(--primary);">Hoş geldin aşkım</p>
+        <h2>Bizim Küçük Hikayemiz</h2>
+        <p>Sana özel, kalpten gelen küçük bir hediye. Anılarımızı canlandırmaya hazır mısın?</p>
+        <button class="btn" onclick="nextPage('page-puzzle')">Hikayemize Başla 💖</button>
+    </div>
 
+    <div class="page" id="page-puzzle">
+        <h2>Parçalarını Birleştir</h2>
+        <p>İki kareye dokunarak yer değiştir. Resmi tamamla!</p>
+        <div class="puzzle-grid" id="puzzle"></div>
+        <button class="btn" style="background: transparent; color: var(--primary); box-shadow: none;" onclick="nextPage('page-letter')">Bulmacayı atla ➔</button>
+    </div>
 
-    <!-- =====================================
-         HOŞ GELDİN
-    ====================================== -->
-
-    <section class="page" id="page-welcome">
-
-        <img
-            src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600"
-            class="profile-img"
-            alt="Kalp"
-        >
-
-        <p style="font-size:.85rem;color:var(--primary);">
-            Hoş geldin aşkım 💗
-        </p>
-
-        <h2>
-            Bizim Küçük Hikayemiz
-        </h2>
-
-        <p>
-            Sana özel, kalpten gelen küçük bir hediye.
-            <br>
-            Anılarımızı canlandırmaya hazır mısın?
-        </p>
-
-        <button class="btn" id="start-story">
-            Hikayemize Başla 💖
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         PUZZLE
-    ====================================== -->
-
-    <section class="page" id="page-puzzle">
-
-        <h2>
-            Parçalarını Birleştir 🧩
-        </h2>
-
-        <p>
-            İki kareye dokunarak yer değiştir.
-            <br>
-            Resmi tamamla!
-        </p>
-
-        <div
-            class="puzzle-grid"
-            id="puzzle"
-        ></div>
-
-        <button class="btn skip-btn" id="skip-puzzle">
-            Bulmacayı Atla ➔
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         MEKTUP
-    ====================================== -->
-
-    <section class="page" id="page-letter">
-
-        <h2>
-            Aşk Mektubum 💌
-        </h2>
-
+    <div class="page" id="page-letter">
+        <h2>Aşk Mektubum</h2>
         <div class="letter-card">
-
-            <p>
-                Sevgilim,
-                <br><br>
-
-                Bu satırları sana ne kadar değer verdiğimi
-                anlatabilmek için yazıyorum.
-                Seninle geçen her gün kalbimin daha fazla
-                sevmeyi öğrendiği bir gün oldu.
-                <br><br>
-
-                Gözlerine baktığım her an zamanın önemi
-                kalmıyor.
-                Seninle geçirdiğim küçük anların bile
-                benim için çok büyük bir anlamı var.
-                <br><br>
-
-                İyi ki varsın.
-                İyi ki yollarımız kesişmiş.
-                <br><br>
-
-                Seni çok seviyorum. ❤️
-            </p>
-
+            <p>Sevgilim,<br><br>Bu satırları sana ne kadar değer verdiğimi anlatabilmek için yazıyorum. Seninle geçen her gün kalbimin daha fazla sevmeyi öğrendiği bir gün oldu.<br><br>Gözlerine baktığım her an zamanın önemi kalmıyor. İyi ki varsın, seni çok seviyorum! ❤️</p>
         </div>
+        <button class="btn" onclick="nextPage('page-album')">Albüme Geçelim ➔</button>
+    </div>
 
-        <button class="btn" id="to-album">
-            Albüme Geçelim ➔
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         ALBÜM
-    ====================================== -->
-
-    <section class="page" id="page-album">
-
-        <h2>
-            Anı Albümümüz 📸
-        </h2>
-
+    <div class="page" id="page-album">
+        <h2>Anı Albümümüz</h2>
         <div class="album-card">
-
-            <img
-                id="album-img"
-                class="album-img"
-                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=700"
-                alt="Anımız"
-            >
-
-            <p
-                id="album-text"
-                class="album-title"
-            >
-                İlk Bakış
-            </p>
-
+            <img id="album-img" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="album-img">
+            <p id="album-text" style="margin-top: 10px; font-weight: 600;">İlk Görüşümüz</p>
             <div class="album-controls">
-
-                <button
-                    class="btn album-arrow"
-                    id="prev-photo"
-                >
-                    ❮
-                </button>
-
-                <span id="album-counter">
-                    1 / 3
-                </span>
-
-                <button
-                    class="btn album-arrow"
-                    id="next-photo"
-                >
-                    ❯
-                </button>
-
+                <button class="btn" style="padding: 5px 15px;" onclick="prevPhoto()">❮</button>
+                <span id="album-counter">1 / 3</span>
+                <button class="btn" style="padding: 5px 15px;" onclick="nextPhoto()">❯</button>
             </div>
-
         </div>
+        <button class="btn" onclick="nextPage('page-music')">Müziğe Geçelim ➔</button>
+    </div>
 
-        <button class="btn" id="to-music">
-            Müziğe Geçelim 🎵 ➔
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         MÜZİK
-    ====================================== -->
-
-    <section class="page" id="page-music">
-
+    <div class="page" id="page-music">
         <div class="player-card">
-
-            <img
-                src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600"
-                class="disc"
-                id="disc"
-                alt="Albüm"
-            >
-
-            <p class="music-label">
-                ŞİMDİ ÇALIYOR
-            </p>
-
-            <h2 style="margin-bottom:3px;">
-                Raf
-            </h2>
-
-            <p>
-                Deeprise
-            </p>
-
-            <audio
-                id="audio"
-                preload="none"
-                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
-            ></audio>
-
-            <button
-                class="btn"
-                id="play-btn"
-            >
-                ▶ Oynat
-            </button>
-
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="disc" id="disc">
+            <p style="font-size:0.75rem; color:#aaa; letter-spacing:1px;">ŞİMDİ ÇALIYOR</p>
+            <h2 style="margin-bottom:2px;">Raf</h2>
+            <p>Deeprise</p>
+            <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <button class="btn" onclick="toggleMusic()" id="play-btn">▶ Oynat</button>
         </div>
+        <button class="btn" onclick="nextPage('page-counter')">Zamanı Gör ➔</button>
+    </div>
 
-        <button class="btn" id="to-counter">
-            Zamanı Gör ⏱️ ➔
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         SAYAÇ
-    ====================================== -->
-
-    <section class="page" id="page-counter">
-
-        <div class="counter-icon">
-            ♾️
-        </div>
-
-        <h2>
-            Birlikte Olduğumuz
-            <br>
-            Her Anın Hesabı
-        </h2>
-
-        <p style="font-size:.8rem;">
-            18 Mayıs 2026 tarihinden beri
-        </p>
-
+    <div class="page" id="page-counter">
+        <div style="font-size: 2.5rem;">♾️</div>
+        <h2>Birlikte Olduğumuz Her Anın Hesabı</h2>
+        <p style="font-size:0.8rem;">18 Mayıs 2026 tarihinden beri</p>
         <div class="counter-grid">
-
-            <div class="counter-box">
-                <span id="c-days">0</span>
-                <label>GÜN</label>
-            </div>
-
-            <div class="counter-box">
-                <span id="c-hours">0</span>
-                <label>SAAT</label>
-            </div>
-
-            <div class="counter-box">
-                <span id="c-mins">0</span>
-                <label>DAKİKA</label>
-            </div>
-
-            <div class="counter-box">
-                <span id="c-secs">0</span>
-                <label>SANİYE</label>
-            </div>
-
+            <div class="counter-box"><span id="c-days">0</span><label>GÜN</label></div>
+            <div class="counter-box"><span id="c-hours">0</span><label>SAAT</label></div>
+            <div class="counter-box"><span id="c-mins">0</span><label>DAKİKA</label></div>
+            <div class="counter-box"><span id="c-secs">0</span><label>SANİYE</label></div>
         </div>
-
-        <p style="font-style:italic;font-size:.85rem;">
-            "Her saniye seninle bir ömre bedel..." ❤️
-        </p>
-
-        <button
-            class="btn restart"
-            id="restart"
-        >
-            🔄 Hikayeyi Baştan Yaşa
-        </button>
-
-    </section>
-
-
-    <!-- =====================================
-         JAVASCRIPT
-    ====================================== -->
+        <p style="font-style: italic; font-size: 0.85rem;">"Her saniye seninle bir ömre bedel..."</p>
+        <button class="btn" onclick="nextPage('page-pin')">🔄 Hikayeyi Baştan Yaşa</button>
+    </div>
 
     <script>
+        var TARGET_PIN = "180526";
+        var currentPin = "";
 
-        /* =====================================
-           PIN SİSTEMİ
-        ====================================== */
-
-        const TARGET_PIN = "180526";
-
-        let currentPin = "";
-
-        const numberKeys =
-            document.querySelectorAll(".key[data-num]");
-
-        const clearButton =
-            document.getElementById("clear-pin");
-
-        const backspaceButton =
-            document.getElementById("backspace");
-
-
-        numberKeys.forEach(function(key) {
-
-            key.addEventListener("click", function() {
-
-                const number = key.dataset.num;
-
-                if (currentPin.length >= 6) {
-                    return;
-                }
-
-                currentPin += number;
-
+        function pressKey(num) {
+            if (currentPin.length < 6) {
+                currentPin += num;
                 updateDots();
 
                 if (currentPin.length === 6) {
-
-                    setTimeout(function() {
-
-                        checkPin();
-
-                    }, 250);
-
+                    if (currentPin === TARGET_PIN) {
+                        setTimeout(function() {
+                            nextPage('page-welcome');
+                            clearPin();
+                        }, 200);
+                    } else {
+                        setTimeout(function() {
+                            alert("Hatalı Şifre!");
+                            clearPin();
+                        }, 200);
+                    }
                 }
-
-            });
-
-        });
-
-
-        clearButton.addEventListener("click", function() {
-
-            clearPin();
-
-        });
-
-
-        backspaceButton.addEventListener("click", function() {
-
-            currentPin =
-                currentPin.slice(0, -1);
-
-            updateDots();
-
-        });
-
-
-        function updateDots() {
-
-            for (let i = 0; i < 6; i++) {
-
-                const dot =
-                    document.getElementById("dot-" + i);
-
-                if (i < currentPin.length) {
-
-                    dot.classList.add("filled");
-
-                } else {
-
-                    dot.classList.remove("filled");
-
-                }
-
             }
-
         }
-
 
         function clearPin() {
-
             currentPin = "";
-
             updateDots();
-
         }
 
-
-        function checkPin() {
-
-            if (currentPin === TARGET_PIN) {
-
-                nextPage("page-welcome");
-
-                clearPin();
-
-            } else {
-
-                alert("Hatalı Şifre! 🔒");
-
-                clearPin();
-
+        function updateDots() {
+            for (var i = 0; i < 6; i++) {
+                var dot = document.getElementById('dot-' + i);
+                if (dot) {
+                    if (i < currentPin.length) {
+                        dot.classList.add('filled');
+                    } else {
+                        dot.classList.remove('filled');
+                    }
+                }
             }
-
         }
-
-
-        /* =====================================
-           SAYFA GEÇİŞLERİ
-        ====================================== */
 
         function nextPage(pageId) {
-
-            const pages =
-                document.querySelectorAll(".page");
-
-            pages.forEach(function(page) {
-
-                page.classList.remove("active");
-
-            });
-
-            const target =
-                document.getElementById(pageId);
-
-            if (target) {
-
-                target.classList.add("active");
-
+            var pages = document.querySelectorAll('.page');
+            for(var i=0; i<pages.length; i++) {
+                pages[i].classList.remove('active');
             }
-
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-            if (pageId === "page-puzzle") {
-
-                initPuzzle();
-
-            }
-
+            document.getElementById(pageId).classList.add('active');
+            if(pageId === 'page-puzzle') initPuzzle();
         }
 
-
-        document
-            .getElementById("start-story")
-            .addEventListener("click", function() {
-
-                nextPage("page-puzzle");
-
-            });
-
-
-        document
-            .getElementById("skip-puzzle")
-            .addEventListener("click", function() {
-
-                nextPage("page-letter");
-
-            });
-
-
-        document
-            .getElementById("to-album")
-            .addEventListener("click", function() {
-
-                nextPage("page-album");
-
-            });
-
-
-        document
-            .getElementById("to-music")
-            .addEventListener("click", function() {
-
-                nextPage("page-music");
-
-            });
-
-
-        document
-            .getElementById("to-counter")
-            .addEventListener("click", function() {
-
-                nextPage("page-counter");
-
-            });
-
-
-        document
-            .getElementById("restart")
-            .addEventListener("click", function() {
-
-                const audio =
-                    document.getElementById("audio");
-
-                audio.pause();
-
-                audio.currentTime = 0;
-
-                document
-                    .getElementById("disc")
-                    .classList.remove("playing");
-
-                document
-                    .getElementById("play-btn")
-                    .innerText = "▶ Oynat";
-
-                nextPage("page-pin");
-
-            });
-
-
-        /* =====================================
-           PUZZLE
-        ====================================== */
-
-        const puzzleImage =
-            "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600";
-
-        let tiles =
-            Array.from(
-                { length: 16 },
-                (_, i) => i
-            );
-
-        let selectedTile = null;
-
-
-        function shuffleTiles() {
-
-            for (let i = tiles.length - 1; i > 0; i--) {
-
-                const j =
-                    Math.floor(Math.random() * (i + 1));
-
-                [tiles[i], tiles[j]] =
-                    [tiles[j], tiles[i]];
-
-            }
-
-        }
-
+        /* PUZZLE MANTIĞI */
+        var puzzleImg = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400";
+        var tiles = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+        var selectedTile = null;
 
         function initPuzzle() {
-
-            const container =
-                document.getElementById("puzzle");
-
-            container.innerHTML = "";
-
-            tiles =
-                Array.from(
-                    { length: 16 },
-                    (_, i) => i
-                );
-
-            shuffleTiles();
-
-            selectedTile = null;
-
-            renderPuzzle();
-
+            var container = document.getElementById('puzzle');
+            container.innerHTML = '';
+            tiles.sort(function() { return Math.random() - 0.5; });
+            for (var i = 0; i < tiles.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'tile';
+                var pos = tiles[i];
+                var row = Math.floor(pos / 4);
+                var col = pos % 4;
+                div.style.backgroundImage = 'url(' + puzzleImg + ')';
+                div.style.backgroundPosition = '-' + (col * 75) + 'px -' + (row * 75) + 'px';
+                (function(index){
+                    div.onclick = function() { tileClick(index); };
+                })(i);
+                container.appendChild(div);
+            }
         }
 
+        function tileClick(idx) {
+            var tileEls = document.querySelectorAll('.tile');
+            if (selectedTile === null) {
+                selectedTile = idx;
+                tileEls[idx].classList.add('selected');
+            } else {
+                var temp = tiles[selectedTile];
+                tiles[selectedTile] = tiles[idx];
+                tiles[idx] = temp;
+                selectedTile = null;
+                renderPuzzle();
+            }
+        }
 
         function renderPuzzle() {
-
-            const container =
-                document.getElementById("puzzle");
-
-            container.innerHTML = "";
-
-            tiles.forEach(function(tilePosition, index) {
-
-                const tile =
-                    document.createElement("div");
-
-                tile.className = "tile";
-
-                if (selectedTile === index) {
-
-                    tile.classList.add("selected");
-
-                }
-
-                const row =
-                    Math.floor(tilePosition / 4);
-
-                const col =
-                    tilePosition % 4;
-
-                const gridSize =
-                    Math.min(320, window.innerWidth * .9);
-
-                const innerSize =
-                    gridSize - 10;
-
-                const tileSize =
-                    innerSize / 4;
-
-                tile.style.backgroundImage =
-                    "url('" + puzzleImage + "')";
-
-                tile.style.backgroundSize =
-                    innerSize + "px " + innerSize + "px";
-
-                tile.style.backgroundPosition =
-                    "-" + (col * tileSize) + "px -" + (row * tileSize) + "px";
-
-                tile.addEventListener("click", function() {
-
-                    tileClick(index);
-
-                });
-
-                container.appendChild(tile);
-
-            });
-
+            var tileEls = document.querySelectorAll('.tile');
+            for (var i = 0; i < tiles.length; i++) {
+                tileEls[i].classList.remove('selected');
+                var pos = tiles[i];
+                var row = Math.floor(pos / 4);
+                var col = pos % 4;
+                tileEls[i].style.backgroundPosition = '-' + (col * 75) + 'px -' + (row * 75) + 'px';
+            }
         }
 
-
-        function tileClick(index) {
-
-            if (selectedTile === null) {
-
-                selectedTile = index;
-
-                renderPuzzle();
-
-                return;
-
-            }
-
-            if (selectedTile === index) {
-
-                selectedTile = null;
-
-                renderPuzzle();
-
-                return;
-
-            }
-
-            [
-                tiles[selectedTile],
-                tiles[index]
-            ] = [
-                tiles[index],
-                tiles[selectedTile]
-            ];
-
-            selectedTile = null;
-
-            renderPuzzle();
-
-            checkPuzzle();
-
-        }
-
-
-        function checkPuzzle() {
-
-            const solved =
-                tiles.every(function(value, index) {
-
-                    return value === index;
-
-                });
-
-            if (solved) {
-
-                setTimeout(function() {
-
-                    alert("Başardın! 🥰❤️");
-
-                    nextPage("page-letter");
-
-                }, 300);
-
-            }
-
-        }
-
-
-        /* =====================================
-           ALBÜM
-        ====================================== */
-
-        const photos = [
-
-            {
-                src:
-                    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=700",
-                title:
-                    "İlk Bakış ❤️"
-            },
-
-            {
-                src:
-                    "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=700",
-                title:
-                    "Sahilde Birlikte 🌊"
-            },
-
-            {
-                src:
-                    "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=700",
-                title:
-                    "Sonsuza Dek 💕"
-            }
-
+        /* ALBÜM MANTIĞI */
+        var photos = [
+            { src: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400", title: "İlk Bakış" },
+            { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400", title: "Sahilde Yürüyüş" },
+            { src: "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=400", title: "Sonsuza Dek" }
         ];
-
-        let photoIndex = 0;
-
-
+        var photoIdx = 0;
         function updatePhoto() {
-
-            const image =
-                document.getElementById("album-img");
-
-            const text =
-                document.getElementById("album-text");
-
-            const counter =
-                document.getElementById("album-counter");
-
-            image.src =
-                photos[photoIndex].src;
-
-            text.innerText =
-                photos[photoIndex].title;
-
-            counter.innerText =
-                (photoIndex + 1) +
-                " / " +
-                photos.length;
-
+            document.getElementById('album-img').src = photos[photoIdx].src;
+            document.getElementById('album-text').innerText = photos[photoIdx].title;
+            document.getElementById('album-counter').innerText = (photoIdx + 1) + ' / ' + photos.length;
         }
+        function nextPhoto() { photoIdx = (photoIdx + 1) % photos.length; updatePhoto(); }
+        function prevPhoto() { photoIdx = (photoIdx - 1 + photos.length) % photos.length; updatePhoto(); }
 
-
-        document
-            .getElementById("next-photo")
-            .addEventListener("click", function() {
-
-                photoIndex =
-                    (photoIndex + 1) %
-                    photos.length;
-
-                updatePhoto();
-
-            });
-
-
-        document
-            .getElementById("prev-photo")
-            .addEventListener("click", function() {
-
-                photoIndex =
-                    (photoIndex - 1 + photos.length) %
-                    photos.length;
-
-                updatePhoto();
-
-            });
-
-
-        /* =====================================
-           MÜZİK
-        ====================================== */
-
-        const audio =
-            document.getElementById("audio");
-
-        const playButton =
-            document.getElementById("play-btn");
-
-        const disc =
-            document.getElementById("disc");
-
-
-        playButton.addEventListener("click", async function() {
-
+        /* MÜZİK MANTIĞI */
+        function toggleMusic() {
+            var audio = document.getElementById('audio');
+            var btn = document.getElementById('play-btn');
+            var disc = document.getElementById('disc');
             if (audio.paused) {
-
-                try {
-
-                    await audio.play();
-
-                    playButton.innerText =
-                        "❚❚ Duraklat";
-
-                    disc.classList.add("playing");
-
-                } catch (error) {
-
-                    alert(
-                        "Müzik başlatılamadı. İnternet bağlantısını kontrol et."
-                    );
-
-                }
-
+                audio.play();
+                btn.innerText = "❚❚ Duraklat";
+                disc.classList.add('playing');
             } else {
-
                 audio.pause();
-
-                playButton.innerText =
-                    "▶ Oynat";
-
-                disc.classList.remove("playing");
-
+                btn.innerText = "▶ Oynat";
+                disc.classList.remove('playing');
             }
-
-        });
-
-
-        audio.addEventListener("ended", function() {
-
-            playButton.innerText =
-                "▶ Oynat";
-
-            disc.classList.remove("playing");
-
-        });
-
-
-        /* =====================================
-           SAYAÇ
-        ====================================== */
-
-        const START_DATE =
-            new Date("2026-05-18T00:00:00");
-
-
-        function updateCounter() {
-
-            const now =
-                new Date();
-
-            const difference =
-                now.getTime() -
-                START_DATE.getTime();
-
-
-            if (difference <= 0) {
-
-                document.getElementById("c-days").innerText = "0";
-                document.getElementById("c-hours").innerText = "0";
-                document.getElementById("c-mins").innerText = "0";
-                document.getElementById("c-secs").innerText = "0";
-
-                return;
-
-            }
-
-
-            const seconds =
-                Math.floor(difference / 1000);
-
-            const days =
-                Math.floor(
-                    seconds / 86400
-                );
-
-            const hours =
-                Math.floor(
-                    (seconds % 86400) / 3600
-                );
-
-            const minutes =
-                Math.floor(
-                    (seconds % 3600) / 60
-                );
-
-            const remainingSeconds =
-                seconds % 60;
-
-
-            document.getElementById("c-days").innerText =
-                days;
-
-            document.getElementById("c-hours").innerText =
-                hours;
-
-            document.getElementById("c-mins").innerText =
-                minutes;
-
-            document.getElementById("c-secs").innerText =
-                remainingSeconds;
-
         }
 
+        /* SAYAÇ MANTIĞI */
+        var START_DATE = new Date("2026-05-18T00:00:00");
+        setInterval(function() {
+            var now = new Date();
+            var diff = now - START_DATE;
+            if(diff > 0) {
+                document.getElementById('c-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('c-hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('c-mins').innerText = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('c-secs').innerText = Math.floor((diff / 1000) % 60);
+            }
+        }, 1000);
 
-        updateCounter();
-
-        setInterval(
-            updateCounter,
-            1000
-        );
-
-
-        /* =====================================
-           UÇAN KALPLER
-        ====================================== */
-
-        const heartsContainer =
-            document.getElementById("hearts");
-
-        const heartEmojis = [
-            "💖",
-            "💕",
-            "💗",
-            "🌸",
-            "✨",
-            "🌹"
-        ];
-
-
-        function createHeart() {
-
-            const heart =
-                document.createElement("div");
-
-            heart.className =
-                "heart-float";
-
-            heart.innerText =
-                heartEmojis[
-                    Math.floor(
-                        Math.random() *
-                        heartEmojis.length
-                    )
-                ];
-
-            heart.style.left =
-                Math.random() * 100 + "vw";
-
-            heart.style.fontSize =
-                (Math.random() * 12 + 15) + "px";
-
-            const duration =
-                Math.random() * 3 + 4;
-
-            heart.style.animationDuration =
-                duration + "s";
-
+        /* KALPLER */
+        var heartsContainer = document.getElementById('hearts');
+        var emojis = ['💖', '🌸', '✨', '🌹'];
+        setInterval(function() {
+            var heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             heartsContainer.appendChild(heart);
-
-
-            setTimeout(function() {
-
-                heart.remove();
-
-            }, duration * 1000);
-
-        }
-
-
-        setInterval(
-            createHeart,
-            700
-        );
-
-
-        /* =====================================
-           BAŞLANGIÇ
-        ====================================== */
-
-        updateDots();
-
+            setTimeout(function() { heart.remove(); }, 4000);
+        }, 600);
     </script>
-
 </body>
 </html>
