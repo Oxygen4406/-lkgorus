@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -8,120 +8,107 @@
     <style>
         :root {
             --bg-color: #ffeef2;
-            --card-bg: rgba(255, 255, 255, 0.85);
             --primary: #ff4b72;
             --text-color: #5a3e49;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body { background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%); color: var(--text-color); min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; }
-        .page { display: none; width: 100%; max-width: 420px; min-height: 100vh; padding: 25px 20px; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.6s ease; position: relative; }
-        .page.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Floating Emojis */
-        .hearts-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-        .heart-float { position: absolute; font-size: 1.2rem; animation: floatUp 4s infinite linear; opacity: 0.6; }
-        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.8); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
+        .page { display: none; width: 100%; max-width: 420px; min-height: 100vh; padding: 25px 20px; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .page.active { display: flex; }
 
-        h1, h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
+        h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
         p { font-size: 0.95rem; line-height: 1.5; color: #7a5c68; }
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3); transition: 0.2s; z-index: 2; }
-        .btn:active { transform: scale(0.95); }
-
-        /* Pin Screen */
-        .pin-dots { display: flex; gap: 12px; margin: 20px 0 30px; }
-        .dot { width: 14px; height: 14px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.2s; }
+        
+        /* PIN EKRANI */
+        .pin-dots { display: flex; gap: 12px; margin: 25px 0 35px; justify-content: center; }
+        .dot { width: 16px; height: 16px; border: 2px solid var(--primary); border-radius: 50%; background: transparent; transition: 0.2s; }
         .dot.filled { background: var(--primary); }
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 280px; }
-        .key { background: white; border-radius: 15px; height: 55px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; }
+        
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 280px; margin: 0 auto; }
+        .key { background: white; border-radius: 15px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.3rem; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .key:active { background: #ffe3ec; transform: scale(0.92); }
 
-        /* Welcome & Profile */
-        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; object-fit: cover; box-shadow: 0 6px 20px rgba(0,0,0,0.1); margin-bottom: 20px; }
-
-        /* 4x4 Puzzle */
-        .puzzle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; width: 300px; height: 300px; background: white; padding: 5px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 15px 0; }
-        .tile { width: 100%; height: 100%; background-size: 300px 300px; cursor: pointer; border-radius: 4px; border: 1px solid rgba(255,255,255,0.5); }
-        .tile.selected { border: 2px solid var(--primary); transform: scale(0.95); }
-
-        /* Letter Screen */
-        .letter-card { background: white; padding: 25px; border-radius: 20px; text-align: left; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-height: 400px; overflow-y: auto; border: 1px solid #ffe3ec; }
-
-        /* Album Screen */
-        .album-card { background: white; padding: 15px; border-radius: 20px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .album-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover; }
-        .album-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-
-        /* Music Player */
-        .player-card { background: white; padding: 25px; border-radius: 25px; width: 100%; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; }
-        .disc { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: rotate 10s linear infinite paused; }
-        .disc.playing { animation-play-state: running; }
-        @keyframes rotate { 100% { transform: rotate(360deg); } }
-
-        /* Counter Screen */
-        .counter-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; margin: 20px 0; }
-        .counter-box { background: white; padding: 15px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-        .counter-box span { display: block; font-size: 1.8rem; font-weight: 600; color: var(--primary); }
-        .counter-box label { font-size: 0.75rem; color: #999; letter-spacing: 1px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; }
     </style>
 </head>
 <body>
-
-    <div class="hearts-bg" id="hearts"></div>
 
     <div class="page active" id="page-pin">
         <div style="font-size: 2.5rem; margin-bottom: 10px;">💖</div>
         <h2>Senin İçin</h2>
         <p>Bu kalbin anahtarı sende — PIN'i gir de açılsın</p>
+        
         <div class="pin-dots">
-            <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            <div class="dot" id="dot-0"></div>
+            <div class="dot" id="dot-1"></div>
+            <div class="dot" id="dot-2"></div>
+            <div class="dot" id="dot-3"></div>
+            <div class="dot" id="dot-4"></div>
+            <div class="dot" id="dot-5"></div>
         </div>
+
         <div class="keypad">
-            <div class="key" onclick="pressKey('1')">1</div><div class="key" onclick="pressKey('2')">2</div><div class="key" onclick="pressKey('3')">3</div>
-            <div class="key" onclick="pressKey('4')">4</div><div class="key" onclick="pressKey('5')">5</div><div class="key" onclick="pressKey('6')">6</div>
-            <div class="key" onclick="pressKey('7')">7</div><div class="key" onclick="pressKey('8')">8</div><div class="key" onclick="pressKey('9')">9</div>
-            <div class="key" onclick="clearPin()">❌</div><div class="key" onclick="pressKey('0')">0</div><div class="key" style="font-size:0.9rem">🔒</div>
+            <div class="key" onclick="pressKey('1')">1</div>
+            <div class="key" onclick="pressKey('2')">2</div>
+            <div class="key" onclick="pressKey('3')">3</div>
+            <div class="key" onclick="pressKey('4')">4</div>
+            <div class="key" onclick="pressKey('5')">5</div>
+            <div class="key" onclick="pressKey('6')">6</div>
+            <div class="key" onclick="pressKey('7')">7</div>
+            <div class="key" onclick="pressKey('8')">8</div>
+            <div class="key" onclick="pressKey('9')">9</div>
+            <div class="key" onclick="clearPin()">❌</div>
+            <div class="key" onclick="pressKey('0')">0</div>
+            <div class="key" onclick="clearPin()">🔒</div>
         </div>
     </div>
 
     <div class="page" id="page-welcome">
-        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="profile-img">
-        <p style="font-size: 0.85rem; color: var(--primary);">Hoş geldin aşkım</p>
-        <h2>Bizim Küçük Hikayemiz</h2>
-        <p>Sana özel, kalpten gelen küçük bir hediye. Anılarımızı canlandırmaya hazır mısın?</p>
-        <button class="btn" onclick="nextPage('page-puzzle')">Hikayemize Başla 💖</button>
+        <h2>Tebrikler Aşkım! 🎉</h2>
+        <p>Şifreyi doğru girdin, hikayemize hoş geldin!</p>
     </div>
 
-    <div class="page" id="page-puzzle">
-        <h2>Parçalarını Birleştir</h2>
-        <p>İki kareye dokunarak yer değiştir. Resmi tamamla!</p>
-        <div class="puzzle-grid" id="puzzle"></div>
-        <button class="btn" style="background: transparent; color: var(--primary); box-shadow: none;" onclick="nextPage('page-letter')">Bulmacayı atla ➔</button>
-    </div>
+    <script>
+        var TARGET_PIN = "180526";
+        var currentPin = "";
 
-    <div class="page" id="page-letter">
-        <h2>Aşk Mektubum</h2>
-        <div class="letter-card">
-            <p>Sevgilim,<br><br>Bu satırları sana ne kadar değer verdiğimi anlatabilmek için yazıyorum. Senle geçen her gün kalbimin daha fazla sevmeyi öğrendiği bir gün oldu.<br><br>Gözlerine baktığım her an zamanın önemi kalmıyor. İyi ki varsın, seni çok seviyorum! ❤️</p>
-        </div>
-        <button class="btn" onclick="nextPage('page-album')">Albüme Geçelim ➔</button>
-    </div>
+        function pressKey(num) {
+            if (currentPin.length < 6) {
+                currentPin += num;
+                updateDots();
 
-    <div class="page" id="page-album">
-        <h2>Anı Albümümüz</h2>
-        <div class="album-card">
-            <img id="album-img" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="album-img">
-            <p id="album-text" style="margin-top: 10px; font-weight: 600;">İlk Görüşümüz</p>
-            <div class="album-controls">
-                <button class="btn" style="padding: 5px 15px;" onclick="prevPhoto()">❮</button>
-                <span id="album-counter">1 / 3</span>
-                <button class="btn" style="padding: 5px 15px;" onclick="nextPhoto()">❯</button>
-            </div>
-        </div>
-        <button class="btn" onclick="nextPage('page-music')">Müziğe Geçelim ➔</button>
-    </div>
+                if (currentPin.length === 6) {
+                    if (currentPin === TARGET_PIN) {
+                        setTimeout(function() {
+                            document.getElementById('page-pin').classList.remove('active');
+                            document.getElementById('page-welcome').classList.add('active');
+                        }, 200);
+                    } else {
+                        setTimeout(function() {
+                            alert("Hatalı Şifre!");
+                            clearPin();
+                        }, 200);
+                    }
+                }
+            }
+        }
 
-    <div class="page" id="page-music">
-        <div class="player-card">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="disc" id="disc">
-            <p style="font-size:0.75rem; color:#aaa; letter-spacing:1px;">ŞİMDİ ÇALIYOR</p>
-            <h2
+        function clearPin() {
+            currentPin = "";
+            updateDots();
+        }
+
+        function updateDots() {
+            for (var i = 0; i < 6; i++) {
+                var dot = document.getElementById('dot-' + i);
+                if (i < currentPin.length) {
+                    dot.classList.add('filled');
+                } else {
+                    dot.classList.remove('filled');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
