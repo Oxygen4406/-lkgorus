@@ -27,7 +27,7 @@
         .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3); transition: 0.2s; z-index: 20; }
         .btn:active { transform: scale(0.95); }
 
-        /* PIN EKRANI (6 HANELİ) */
+        /* PIN EKRANI */
         .pin-dots { display: flex; gap: 10px; margin: 20px 0 30px; }
         .dot { width: 14px; height: 14px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.2s; background: transparent; }
         .dot.filled { background: var(--primary); }
@@ -60,7 +60,6 @@
 
     <div class="hearts-bg" id="hearts"></div>
 
-    <!-- 1. ŞİFRE EKRANI (6 HANELİ) -->
     <div class="page active" id="page-pin">
         <div style="font-size: 2.5rem; margin-bottom: 10px;">💖</div>
         <h2>Senin İçin</h2>
@@ -91,7 +90,6 @@
         </div>
     </div>
 
-    <!-- 2. KARŞILAMA EKRANI -->
     <div class="page" id="page-welcome">
         <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="profile-img">
         <p style="font-size: 0.85rem; color: var(--primary);">Hoş geldin aşkım</p>
@@ -100,7 +98,6 @@
         <button class="btn" onclick="nextPage('page-puzzle')">Hikayemize Başla 💖</button>
     </div>
 
-    <!-- 3. PUZZLE EKRANI -->
     <div class="page" id="page-puzzle">
         <h2>Parçalarını Birleştir</h2>
         <p>İki kareye dokunarak yer değiştir. Resmi tamamla!</p>
@@ -108,7 +105,6 @@
         <button class="btn" style="background: transparent; color: var(--primary); box-shadow: none;" onclick="nextPage('page-letter')">Bulmacayı atla ➔</button>
     </div>
 
-    <!-- 4. MEKTUP EKRANI -->
     <div class="page" id="page-letter">
         <h2>Aşk Mektubum</h2>
         <div class="letter-card">
@@ -117,7 +113,6 @@
         <button class="btn" onclick="nextPage('page-album')">Albüme Geçelim ➔</button>
     </div>
 
-    <!-- 5. ALBÜM EKRANI -->
     <div class="page" id="page-album">
         <h2>Anı Albümümüz</h2>
         <div class="album-card">
@@ -132,7 +127,6 @@
         <button class="btn" onclick="nextPage('page-music')">Müziğe Geçelim ➔</button>
     </div>
 
-    <!-- 6. MÜZİK EKRANI -->
     <div class="page" id="page-music">
         <div class="player-card">
             <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="disc" id="disc">
@@ -145,7 +139,6 @@
         <button class="btn" onclick="nextPage('page-counter')">Zamanı Gör ➔</button>
     </div>
 
-    <!-- 7. SAYAÇ EKRANI -->
     <div class="page" id="page-counter">
         <div style="font-size: 2.5rem;">♾️</div>
         <h2>Birlikte Olduğumuz Her Anın Hesabı</h2>
@@ -161,7 +154,7 @@
     </div>
 
     <script>
-        var TARGET_PIN = "180526"; // 6 Haneli Şifre
+        var TARGET_PIN = "180526"; // Şifre: 180526
         var currentPin = "";
 
         function pressKey(num) {
