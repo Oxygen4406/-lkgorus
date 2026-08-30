@@ -12,28 +12,55 @@
             --text-color: #5a3e49;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
-        body { background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%); color: var(--text-color); min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; }
+        body { background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 100%); color: var(--text-color); min-height: 100vh; overflow-x: hidden; display: flex; justify-content: center; align-items: center; position: relative; }
         
-        .page { display: none; width: 100%; max-width: 420px; min-height: 100vh; padding: 25px 20px; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-        .page.active { display: flex; }
+        .hearts-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+        .heart-float { position: absolute; font-size: 1.2rem; animation: floatUp 4s infinite linear; opacity: 0.6; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0.8); opacity: 1; } 100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } }
 
-        h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
+        .page { display: none; width: 100%; max-width: 420px; min-height: 100vh; padding: 25px 20px; flex-direction: column; align-items: center; justify-content: center; text-align: center; animation: fadeIn 0.4s ease; position: relative; z-index: 10; }
+        .page.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1, h2 { font-family: 'Caveat', cursive; color: var(--primary); font-size: 2.2rem; margin-bottom: 10px; }
         p { font-size: 0.95rem; line-height: 1.5; color: #7a5c68; }
-        
-        /* PIN EKRANI */
-        .pin-dots { display: flex; gap: 12px; margin: 25px 0 35px; justify-content: center; }
-        .dot { width: 16px; height: 16px; border: 2px solid var(--primary); border-radius: 50%; background: transparent; transition: 0.2s; }
+        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; box-shadow: 0 4px 15px rgba(255, 75, 114, 0.3); transition: 0.2s; z-index: 20; }
+        .btn:active { transform: scale(0.95); }
+
+        /* PIN EKRANI (6 HANELİ) */
+        .pin-dots { display: flex; gap: 10px; margin: 20px 0 30px; }
+        .dot { width: 14px; height: 14px; border: 2px solid var(--primary); border-radius: 50%; transition: 0.2s; background: transparent; }
         .dot.filled { background: var(--primary); }
-        
-        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 280px; margin: 0 auto; }
-        .key { background: white; border-radius: 15px; height: 60px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.3rem; color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; width: 100%; max-width: 280px; z-index: 30; }
+        .key { background: white; border-radius: 15px; height: 55px; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.3rem; color: var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; }
         .key:active { background: #ffe3ec; transform: scale(0.92); }
 
-        .btn { background: var(--primary); color: white; border: none; padding: 12px 24px; border-radius: 25px; font-weight: 600; margin-top: 20px; cursor: pointer; }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; object-fit: cover; box-shadow: 0 6px 20px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .puzzle-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; width: 300px; height: 300px; background: white; padding: 5px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin: 15px 0; }
+        .tile { width: 100%; height: 100%; background-size: 300px 300px; cursor: pointer; border-radius: 4px; }
+        .tile.selected { border: 2px solid var(--primary); }
+
+        .letter-card { background: white; padding: 25px; border-radius: 20px; text-align: left; box-shadow: 0 5px 20px rgba(0,0,0,0.05); max-height: 400px; overflow-y: auto; border: 1px solid #ffe3ec; }
+        .album-card { background: white; padding: 15px; border-radius: 20px; width: 100%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .album-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover; }
+        .album-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+
+        .player-card { background: white; padding: 25px; border-radius: 25px; width: 100%; box-shadow: 0 5px 20px rgba(0,0,0,0.08); text-align: center; }
+        .disc { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.15); animation: rotate 10s linear infinite paused; }
+        .disc.playing { animation-play-state: running; }
+        @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+        .counter-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; margin: 20px 0; }
+        .counter-box { background: white; padding: 15px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .counter-box span { display: block; font-size: 1.8rem; font-weight: 600; color: var(--primary); }
+        .counter-box label { font-size: 0.75rem; color: #999; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
+    <div class="hearts-bg" id="hearts"></div>
+
+    <!-- 1. ŞİFRE EKRANI (6 HANELİ) -->
     <div class="page active" id="page-pin">
         <div style="font-size: 2.5rem; margin-bottom: 10px;">💖</div>
         <h2>Senin İçin</h2>
@@ -64,13 +91,77 @@
         </div>
     </div>
 
+    <!-- 2. KARŞILAMA EKRANI -->
     <div class="page" id="page-welcome">
-        <h2>Tebrikler Aşkım! 🎉</h2>
-        <p>Şifreyi doğru girdin, hikayemize hoş geldin!</p>
+        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="profile-img">
+        <p style="font-size: 0.85rem; color: var(--primary);">Hoş geldin aşkım</p>
+        <h2>Bizim Küçük Hikayemiz</h2>
+        <p>Sana özel, kalpten gelen küçük bir hediye. Anılarımızı canlandırmaya hazır mısın?</p>
+        <button class="btn" onclick="nextPage('page-puzzle')">Hikayemize Başla 💖</button>
+    </div>
+
+    <!-- 3. PUZZLE EKRANI -->
+    <div class="page" id="page-puzzle">
+        <h2>Parçalarını Birleştir</h2>
+        <p>İki kareye dokunarak yer değiştir. Resmi tamamla!</p>
+        <div class="puzzle-grid" id="puzzle"></div>
+        <button class="btn" style="background: transparent; color: var(--primary); box-shadow: none;" onclick="nextPage('page-letter')">Bulmacayı atla ➔</button>
+    </div>
+
+    <!-- 4. MEKTUP EKRANI -->
+    <div class="page" id="page-letter">
+        <h2>Aşk Mektubum</h2>
+        <div class="letter-card">
+            <p>Sevgilim,<br><br>Bu satırları sana ne kadar değer verdiğimi anlatabilmek için yazıyorum. Seninle geçen her gün kalbimin daha fazla sevmeyi öğrendiği bir gün oldu.<br><br>Gözlerine baktığım her an zamanın önemi kalmıyor. İyi ki varsın, seni çok seviyorum! ❤️</p>
+        </div>
+        <button class="btn" onclick="nextPage('page-album')">Albüme Geçelim ➔</button>
+    </div>
+
+    <!-- 5. ALBÜM EKRANI -->
+    <div class="page" id="page-album">
+        <h2>Anı Albümümüz</h2>
+        <div class="album-card">
+            <img id="album-img" src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="album-img">
+            <p id="album-text" style="margin-top: 10px; font-weight: 600;">İlk Görüşümüz</p>
+            <div class="album-controls">
+                <button class="btn" style="padding: 5px 15px;" onclick="prevPhoto()">❮</button>
+                <span id="album-counter">1 / 3</span>
+                <button class="btn" style="padding: 5px 15px;" onclick="nextPhoto()">❯</button>
+            </div>
+        </div>
+        <button class="btn" onclick="nextPage('page-music')">Müziğe Geçelim ➔</button>
+    </div>
+
+    <!-- 6. MÜZİK EKRANI -->
+    <div class="page" id="page-music">
+        <div class="player-card">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400" class="disc" id="disc">
+            <p style="font-size:0.75rem; color:#aaa; letter-spacing:1px;">ŞİMDİ ÇALIYOR</p>
+            <h2 style="margin-bottom:2px;">Raf</h2>
+            <p>Deeprise</p>
+            <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+            <button class="btn" onclick="toggleMusic()" id="play-btn">▶ Oynat</button>
+        </div>
+        <button class="btn" onclick="nextPage('page-counter')">Zamanı Gör ➔</button>
+    </div>
+
+    <!-- 7. SAYAÇ EKRANI -->
+    <div class="page" id="page-counter">
+        <div style="font-size: 2.5rem;">♾️</div>
+        <h2>Birlikte Olduğumuz Her Anın Hesabı</h2>
+        <p style="font-size:0.8rem;">18 Mayıs 2026 tarihinden beri</p>
+        <div class="counter-grid">
+            <div class="counter-box"><span id="c-days">0</span><label>GÜN</label></div>
+            <div class="counter-box"><span id="c-hours">0</span><label>SAAT</label></div>
+            <div class="counter-box"><span id="c-mins">0</span><label>DAKİKA</label></div>
+            <div class="counter-box"><span id="c-secs">0</span><label>SANİYE</label></div>
+        </div>
+        <p style="font-style: italic; font-size: 0.85rem;">"Her saniye seninle bir ömre bedel..."</p>
+        <button class="btn" onclick="nextPage('page-pin')">🔄 Hikayeyi Baştan Yaşa</button>
     </div>
 
     <script>
-        var TARGET_PIN = "180526";
+        var TARGET_PIN = "180526"; // 6 Haneli Şifre
         var currentPin = "";
 
         function pressKey(num) {
@@ -81,8 +172,8 @@
                 if (currentPin.length === 6) {
                     if (currentPin === TARGET_PIN) {
                         setTimeout(function() {
-                            document.getElementById('page-pin').classList.remove('active');
-                            document.getElementById('page-welcome').classList.add('active');
+                            nextPage('page-welcome');
+                            clearPin();
                         }, 200);
                     } else {
                         setTimeout(function() {
@@ -102,13 +193,130 @@
         function updateDots() {
             for (var i = 0; i < 6; i++) {
                 var dot = document.getElementById('dot-' + i);
-                if (i < currentPin.length) {
-                    dot.classList.add('filled');
-                } else {
-                    dot.classList.remove('filled');
+                if (dot) {
+                    if (i < currentPin.length) {
+                        dot.classList.add('filled');
+                    } else {
+                        dot.classList.remove('filled');
+                    }
                 }
             }
         }
+
+        function nextPage(pageId) {
+            var pages = document.querySelectorAll('.page');
+            for(var i=0; i<pages.length; i++) {
+                pages[i].classList.remove('active');
+            }
+            document.getElementById(pageId).classList.add('active');
+            if(pageId === 'page-puzzle') initPuzzle();
+        }
+
+        /* PUZZLE MANTIĞI */
+        var puzzleImg = "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400";
+        var tiles = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+        var selectedTile = null;
+
+        function initPuzzle() {
+            var container = document.getElementById('puzzle');
+            container.innerHTML = '';
+            tiles.sort(function() { return Math.random() - 0.5; });
+            for (var i = 0; i < tiles.length; i++) {
+                var div = document.createElement('div');
+                div.className = 'tile';
+                var pos = tiles[i];
+                var row = Math.floor(pos / 4);
+                var col = pos % 4;
+                div.style.backgroundImage = 'url(' + puzzleImg + ')';
+                div.style.backgroundPosition = '-' + (col * 75) + 'px -' + (row * 75) + 'px';
+                (function(index){
+                    div.onclick = function() { tileClick(index); };
+                })(i);
+                container.appendChild(div);
+            }
+        }
+
+        function tileClick(idx) {
+            var tileEls = document.querySelectorAll('.tile');
+            if (selectedTile === null) {
+                selectedTile = idx;
+                tileEls[idx].classList.add('selected');
+            } else {
+                var temp = tiles[selectedTile];
+                tiles[selectedTile] = tiles[idx];
+                tiles[idx] = temp;
+                selectedTile = null;
+                renderPuzzle();
+            }
+        }
+
+        function renderPuzzle() {
+            var tileEls = document.querySelectorAll('.tile');
+            for (var i = 0; i < tiles.length; i++) {
+                tileEls[i].classList.remove('selected');
+                var pos = tiles[i];
+                var row = Math.floor(pos / 4);
+                var col = pos % 4;
+                tileEls[i].style.backgroundPosition = '-' + (col * 75) + 'px -' + (row * 75) + 'px';
+            }
+        }
+
+        /* ALBÜM MANTIĞI */
+        var photos = [
+            { src: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400", title: "İlk Bakış" },
+            { src: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400", title: "Sahilde Yürüyüş" },
+            { src: "https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=400", title: "Sonsuza Dek" }
+        ];
+        var photoIdx = 0;
+        function updatePhoto() {
+            document.getElementById('album-img').src = photos[photoIdx].src;
+            document.getElementById('album-text').innerText = photos[photoIdx].title;
+            document.getElementById('album-counter').innerText = (photoIdx + 1) + ' / ' + photos.length;
+        }
+        function nextPhoto() { photoIdx = (photoIdx + 1) % photos.length; updatePhoto(); }
+        function prevPhoto() { photoIdx = (photoIdx - 1 + photos.length) % photos.length; updatePhoto(); }
+
+        /* MÜZİK MANTIĞI */
+        function toggleMusic() {
+            var audio = document.getElementById('audio');
+            var btn = document.getElementById('play-btn');
+            var disc = document.getElementById('disc');
+            if (audio.paused) {
+                audio.play();
+                btn.innerText = "❚❚ Duraklat";
+                disc.classList.add('playing');
+            } else {
+                audio.pause();
+                btn.innerText = "▶ Oynat";
+                disc.classList.remove('playing');
+            }
+        }
+
+        /* SAYAÇ MANTIĞI */
+        var START_DATE = new Date("2026-05-18T00:00:00");
+        setInterval(function() {
+            var now = new Date();
+            var diff = now - START_DATE;
+            if(diff > 0) {
+                document.getElementById('c-days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('c-hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('c-mins').innerText = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('c-secs').innerText = Math.floor((diff / 1000) % 60);
+            }
+        }, 1000);
+
+        /* KALPLER */
+        var heartsContainer = document.getElementById('hearts');
+        var emojis = ['💖', '🌸', '✨', '🌹'];
+        setInterval(function() {
+            var heart = document.createElement('div');
+            heart.className = 'heart-float';
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heartsContainer.appendChild(heart);
+            setTimeout(function() { heart.remove(); }, 4000);
+        }, 600);
     </script>
 </body>
 </html>
